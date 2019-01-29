@@ -176,15 +176,25 @@
                             if(lin.length == 0) {
                                 lin = newSvgDom.find(linId + " > polyline");
                                 if(lin.length) {
+                                    try {
                                     x = lin[0].points[0].x + 3;
                                     y = lin[0].points[0].y + 3;
+                                    }
+                                    catch(e){
+
+                                    }
                                 }
                             }
                             if(lin.length == 0) {
                                 lin = newSvgDom.find(linId + " > rect");
                                 if(lin.length) {
+                                    try {
                                     x = lin[0].x.baseVal.value +3;
                                     y = lin[0].y.baseVal.value +3;
+                                    }
+                                    catch(e) {
+                                        
+                                    }
                                 }
                             }
 
