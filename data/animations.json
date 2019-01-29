@@ -1,0 +1,50 @@
+[
+    {
+        "name": "How We Make Money",
+        "defaultTransitionTime": 400,
+        "steps": [
+            {"url": "#", 
+             "zoom": 3, "time": 5000, "scroll":{"x": 1950, "y": 620}, "show": "Salesforce_Area"},
+            {"zoom": 2.23, "scroll":{"x": 942, "y": 529}, "show": "Salesforce_Area,Core"},
+            {"zoom": 2.23, "scroll":{"x": 942, "y": 529}, "show": "Salesforce_Area,Core", "highlight": {"rect": "#charon,#Salesforce_Area","line":"#line39"}},
+            {"zoom": 2.23, "scroll":{"x": 942, "y": 529}, "show": "Salesforce_Area,Core", "highlight": {"rect": "#kraken,#Salesforce_Area","line":"#line38"}},
+            {"zoom": 1.44, "time": 4000, "scroll":{"x": 470, "y": 345}, "show": "Salesforce_Area,Core,Datastores"},
+            {"zoom": 1.44, "time": 4000, "scroll":{"x": 470, "y": 345}, "show": "Salesforce_Area,Core,Datastores", "highlight": {"rect": "#kraken,#mysql","line":"#line16"}},
+            {"zoom": 1.15, "time": 4000, "scroll":{"x": 380, "y": 165}, "show": "Salesforce_Area,Core,Datastores,RabbitMQ"},
+            {"zoom": 1.15, "time": 4000, "scroll":{"x": 380, "y": 165}, "show": "Salesforce_Area,Core,Datastores,RabbitMQ", "highlight": {"rect": "#kraken,#RabbitMQ","line":"#line46"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 550, "y": 75}, "show": "RabbitMQ,Streaming_Daemons"},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 550, "y": 75}, "show": "RabbitMQ,Streaming_Daemons", "highlight": {"rect": "#stealhead,#RabbitMQ","line":"#line23"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 400, "y": 80}, "show": "Core,Streaming_Daemons,AdzerkArea"},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 400, "y": 80}, "show": "Core,Streaming_Daemons,AdzerkArea", "highlight": {"rect": "#stealhead,#kraken","line":"#line55"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 400, "y": 80}, "show": "Core,Streaming_Daemons,AdzerkArea", "highlight": {"rect": "#stealhead,#AdzerkArea","line":"#line32"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": 400, "y": 80}, "show": "Core,Streaming_Daemons,AdzerkArea", "highlight": {"rect": "#stealhead,#kraken","line":"#line55"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": -10, "y": 190}, "show": "Core,Browser,Front_Line,AdzerkArea"},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": -10, "y": 190}, "show": "Core,Browser,Front_Line,AdzerkArea", "highlight": {"rect": "#Browser,#fastly,#stock","line":"#line4,#line11"}},
+            {"zoom": 1.3, "time": 6000, "scroll":{"x": -10, "y": 190}, "show": "Core,Browser,Front_Line,AdzerkArea", "highlight": {"rect": "#Browser,#fastly,#AdzerkArea","line":"#line4,#line10"}},
+            {"zoom": 0.93, "scroll":{"x": 0, "y": 0}}
+        ]
+    },
+    {
+        "defaultTime": 700,
+        "defaultTransitionTime": 500,
+        "steps": [
+            {"url":"#tenGuys",
+            "show": "guy10", "time": 3500, "zoom": 2.39, "scroll":{"x": 1397, "y": 726}},
+            {"show": "guy1", "scroll":{"y": 0, "x": 0}},
+            {"show": "guy2", "scroll":{"y": 0, "x": 480}},
+            {"show": "guy3", "scroll":{"y": 0, "x": 980}},
+            {"show": "guy4", "scroll":{"y": 0, "x": 1300}},
+            {"show": "guy5",  "scroll":{"y": 0, "x": 2050}},
+            {"show": "guy6", "zoom": 1,  "scroll":{"y": 0, "x": 0}},
+            {"show": "guy6,guy7"},
+            {"show": "guy6,guy7,guy8"},
+            {"show": "guy6,guy7,guy8,guy9"},
+            {"show": "guy6,guy7,guy8,guy9,guy10", "time": 1000},
+
+            {"url": "#", 
+                "zoom": 3, "time": 5000, "scroll":{"x": 1950, "y": 620}, "show": "Salesforce_Area"},
+                {"zoom": 2.23, "scroll":{"x": 942, "y": 529}, "show": "Salesforce_Area,Core"},
+            {"url":"#tenGuys",  "scroll":{"y": 0, "x": 0}}
+        ]
+    }
+]

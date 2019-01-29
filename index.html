@@ -1,0 +1,460 @@
+<html>
+    <head>
+        <meta name="robots" content="noindex">
+        <title>Svg Explorer</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <style>
+            :root {
+                --buttonbar-width: 190px;
+            }
+            body {
+                overflow:hidden;
+                height:100%;
+            }
+        .corearea, .connector {
+            opacity: 1; transition: opacity 500ms;
+        }
+
+        .corearea > rect {
+            transition: fill 500ms;
+        }
+        .hidesvg {
+            opacity: 0;transition: opacity 500ms;
+        }            
+
+        .buttonGroup.inactive {
+            display: none;
+        }
+        .connector:hover  * {
+            stroke: red;
+        }
+        .connector.subdued:not(.hidesvg) {
+            opacity: .3;
+        }
+        .connector.spot > * {
+            stroke: black;
+        }
+        .line-association rect {
+            fill: white;
+            pointer-events: bounding-box;
+        }
+        button {
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
+        button.active {
+            background-color: skyblue;
+        }
+        button:focus {outline:0;}
+
+        .active-play-button {
+            display: none;    
+        }
+
+        .svgparent {
+            position:relative;
+            width:100%;
+            height:100%;
+            
+        }
+        .svginner {
+            position:relative;
+            display: block;
+            padding: 0;
+        }
+        .player .svginner.astable {
+            display: table;
+            padding: 1000px;
+        }
+        .svgarea {
+            position:absolute;
+            overflow: auto;
+            top: 0;
+            left:0;
+            bottom: 0;
+            right: 0;
+        }
+        .svgarea.activeanime {
+            overflow: visible;
+        }
+        .player .svgarea.activeanime {
+            left: -1000px;
+            right: 1000px;
+            top: -1000px;
+            bottom: 1000px;
+        }
+        .svgarea {
+            transition: transform 600ms;
+            transform: scale(1,1);
+            transform-origin: 50% top;
+        }
+        .playing .svgarea {
+            transition: 1200ms;
+        }
+        .svgarea.zoomAway {
+            transition: transform 600ms;
+            transform: scale(10.5, 10.5);
+            transform-origin: 50% top;
+        }
+
+        .svgarea.zoomBack {
+            transition: transform 600ms;
+            transform: scale(.1,.1);
+            transform-origin: 50% top;
+        }
+        .svgarea svg {
+            display: table-cell;            
+            transform-origin: left top;
+        }
+        .txtLink {
+            fill: blue;
+            text-decoration: underline;
+        }
+        .txtLink:hover {
+            font-weight: bold;
+        }
+
+        .script-tools-req {
+            display: none;
+        }
+
+        .svgarea g.highlight > rect, 
+        .svgarea g.highlight > line,
+        .svgarea g.connector.highlight line,
+        .svgarea g.highlight > polygon,
+        .svgarea g.highlight > path,
+        .svgarea g.highlight > polyline {
+            stroke: red;
+            stroke-width: 2px;
+        }
+        .svgarea g.highlight > polygon {
+            fill: red;
+        }
+
+        .svgarea rect.active {
+            stroke: red;
+            stroke-width: 3px;
+        }
+        .svgarea line.active,.svgarea polyline.active  {
+            stroke: red;
+            stroke-width:2px;
+        }
+        .svgarea polygon.active {
+            stroke: red;
+            fill: red;
+        }
+
+        .set-highlight .svgarea g[id]:not(.highlight):hover > rect {
+            stroke: pink;
+            stroke-width: 3px;
+        }
+
+        #autoPlay span {
+            display: none;
+        }
+        #autoPlay span.active {
+            display: inline;
+        }
+        @media print {
+            .buttonArea, .svg-infoicon {display:none !important;}
+        }
+        @media print{@page {size: landscape}}
+
+        .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+            background-color: #00a1a4;
+        }
+        </style>
+        <style>
+            .main-layout {
+                display: flex;
+            }
+            .main-layout .content-area {
+                position: relative;
+                width:calc(100% - var(--buttonbar-width));
+                height:100%;
+            }
+            .main-layout .buttonArea {
+                background-color: whitesmoke;
+                padding: 10px;
+                width: var(--buttonbar-width);
+                height: 100%;
+                overflow: auto;
+            }
+            .buttonArea {
+                position:relative;
+            }
+            .scriptNav {
+                display: flex;
+            }
+            .scriptor input[type='text'] {
+                font-size: 12px;
+                width: 50px;
+            }
+            .buttonArea button {
+                display: block;
+                width: 100%;
+                margin: 0;
+                border: 0;
+                margin-bottom: 2px;
+                border-radius: 0;
+                text-align: left;
+            }
+            .buttonArea .scriptNav button, 
+            .buttonArea .play-controls button, 
+            .buttonArea .script-step-controls button {
+                display: inline-block;
+                width: auto;
+            }
+            .buttonArea button.btn-primary {
+                background-color: #ff8580;
+            }
+
+            .play-controls {
+                display: flex;
+                padding: 3px 1px;
+                justify-content: space-between
+            }
+
+            .script-level-fields {
+                margin-top: 5px;
+                border-top: solid 2px black;
+                border-bottom: solid 1px black;
+            }
+            
+            .script-level-fields input[type='text'] {
+                width: 120px;
+            }
+
+            .ranger button {
+                display: inline;
+                margin-top: 5px;
+                width: auto;
+            }
+            .ranger input {
+                width: 100%;
+            }
+            .buttonBox.ranger {
+                margin-top: 20px;
+            }
+            .buttonBox.scriptor {
+                position: absolute;
+                bottom: 0;
+                left: 5px;
+                right:5px;
+            }
+            .main-layout .svgparent {
+                flex-grow: 1;
+            }
+    
+            .note-contents {
+                display: none;
+                background-color:whitesmoke;
+                font-size:20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 300px;
+                height: 150px;
+            }
+            .player .note-contents {
+                display: block;
+            }
+            .player .note-contents.hide {
+                display: none;
+            }
+            .note-contents .note {
+                padding: 15px;
+            }
+            .note-contents.no-content {
+                background-color: transparent;
+            }            
+            .note-contents.no-content:hover {
+                background-color: whitesmoke;
+            }
+
+            .note-contents .ui-icon {
+                opacity: 0;
+            }
+            .note-contents:hover .ui-icon {
+                opacity: 1;
+            }
+            #scriptTool {
+                background-color:whitesmoke;
+            }
+
+            .docubox {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                left: var(--buttonbar-width);
+                height: 120px;
+                padding: 20px;
+                background-color: gray;
+                color: white;
+                display: none;
+            }
+            .docubox.active {
+                display: block;
+            }
+            .closeItemDocs {
+                position:absolute;
+                top: 5px;
+                right: 5px;
+            }
+            .svg-infoicon {
+                pointer-events: bounding-box;
+                cursor:pointer;
+                position:relative;
+                z-index: 100;
+                fill: lightgray;
+            }
+            .svg-infoicon:hover, .connector:hover .svg-infoicon {
+                stroke: red;
+                fill: red;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="main-layout">            
+            <div class="buttonArea">
+                <div id="mainButtons" class="buttonBox buttonGroup">
+                    <button class=" btn btn-sm btn-primary" id="showAll">All</button>
+                    <button class="cmd btn btn-sm btn-primary" data-id="CoreOnly" data-groups="Core">Core Only</button>
+                    <button class="cmd btn btn-sm btn-primary" data-id="BrowserView" data-groups="Core,Browser,Front_Line,Datastores">Main Browser</button>
+                    <button class="cmd btn btn-sm btn-primary" data-id="MobileView" data-groups="Core,Mobile_App,Front_Line,Datastores,SailthruArea,AdzerkArea">Main Mobile</button>
+                    <button class="cmd btn btn-sm btn-primary" data-id="BackendView" data-groups="Core,Datastores,Lambas,RabbitMQ,Streaming_Daemons,Services,Crons">Backend</button>
+
+                    <span style="height:40px;border-right: solid 1px black;margin: 0 10px;"></span>
+
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Browser" data-others=".browser-lines">Browser</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Mobile_App" data-others=".mobile-lines">Mobile</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Front_Line" data-others=".frontline-lines">FrontLine</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Lambdas" data-others=".lambda-lines">Lambdas</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="AdzerkArea" data-others=".adzerk-lines">Adzerk</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Datastores" data-others=".datastore-lines">Datastores</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Core" data-others=".core-lines">Core</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="RabbitMQ" data-others=".rabbit-lines">Rabbit MQ</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="BraintreeArea" data-others=".braintree-lines">Braintree</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Streaming_Daemons" data-others=".daemon-lines">Daemons</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="SailthruArea" data-others=".sailthru-lines">Sailthru</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Services" data-others=".sideservices-lines">Side Services</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Crons" data-others=".cron-lines">Crons</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Salesforce_Area" data-others=".sf-lines">Salesforce</button>
+                    <button class="toggler btn btn-sm btn-secondary" data-id="Twillio_Area" data-others=".twillio-lines">Twillio</button>
+
+                    <span style="height:40px;border-right: solid 1px black;margin: 0 10px;"></span>
+
+                    <button class="togglerLite btn btn-sm btn-info" id="hideBg">Backgrounds</button>
+                    <button class="togglerLite btn btn-sm btn-info" id="hideLinks">Links</button>
+                </div>
+
+                <div id="krakenAwsButtons" class="buttonBox buttonGroup">
+                    <button class="goBack">Overview</button>
+                </div>
+
+                <div id="tenGuysButtons" class="buttonBox buttonGroup">
+                    <button class="goBack">Overview</button>
+                    <button class="toggler" data-id="guy1">Guy 1</button>                
+                    <button class="toggler" data-id="guy2">Guy 2</button>                
+                    <button class="toggler" data-id="guy3">Guy 3</button>                
+                    <button class="toggler" data-id="guy4">Guy 4</button>                
+                    <button class="toggler" data-id="guy5">Guy 5</button>                
+                    <button class="toggler" data-id="guy6">Guy 6</button>                
+                    <button class="toggler" data-id="guy7">Guy 7</button>                
+                    <button class="toggler" data-id="guy8">Guy 8</button>                
+                    <button class="toggler" data-id="guy9">Guy 9</button>                
+                    <button class="toggler" data-id="guy10">Guy 10</button>                
+                </div>
+                <div class="buttonBox ranger">
+                    <input type="range" min=".4" max="3" step=".01" id="zoomLevel"><button id="resetZoom" class="btn btn-secondary btn-sm">reset</button>
+                </div>
+                <div class="buttonBox scriptor">
+                    <button class="btn btn-sm" id="makeScript">Script Tools</button>
+                    <div id="scriptTool" style="display:none">
+                        <select id="scripts" style="width:100%;font-size:12px;">
+                            <option value="">Select...</option>
+                            <option value="new">&lt;&lt; New Script &gt;&gt;</option>
+                        </select>
+                        <div class="script-tools-req">
+                            <div class="play-controls">
+                                <button class="btn btn-sm" id="startScript" title="start the script using the current play mode."><i class="fas fa-play"></i></button>
+                                <button class="btn btn-sm" id="stopScript" style="display:none" title="stop the current script"><i class="fas fa-stop"></i></button>
+                                <div>
+                                    <button class="btn btn-sm" id="autoPlay">
+                                        <span class="active" data-val="0" title="play mode - auto play through all steps using defined times.">A</span>
+                                        <span data-val="1" title="play mode - wait on first step but auto play through remaining steps using defined times.">B</span>
+                                        <span data-val="2" title="play mode - wait on all steps for use of next/prev buttons">C</span></button>
+                                </div>
+                            </div>
+                            <div class="scriptNav" >
+                                <button class="btn btn-lg" id="prevStep" title="Move to previous step in script"><i class="fas fa-angle-left"></i></button>
+                                <div style="display: inline-block; flex-grow: 2;text-align: center">
+                                    <span id="currentStep"></span> of <span id="totalSteps"></span>
+                                </div>
+                                <button class="btn btn-lg" id="nextStep" title="Move to next step in script"><i class="fas fa-angle-right"></i></button>
+                            </div>
+                            <div class="script-level-fields" style="text-align: right">
+                                <div><label title="script name">name:<input type="text" id="scriptName"/></label></div>
+                                <div><label title="default step time in ms used when step hasnt specified a time to show">step time:<input type="text" id="scriptDefTime" style="width:60px;"/></label></div>
+                            </div>
+                            <div class="script-step-controls">
+                                <button class="btn btn-sm active-play-button" id="deleteStep" title="Delete the current step in the script"><i class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-sm active-play-button" id="setScriptStepState" title="Save changes to zoom, scroll and visible items for current step in script"><i class="far fa-save"></i></button>
+                                <button class="btn btn-sm active-play-button" id="addStep" title="Add a new step">+</button>
+                                <button class="btn btn-sm active-play-button" id="highlighMode" title="click on boxes and/or lines to highlight in the step"><i class="far fa-check-square"></i></button>
+                            </div>
+                            <div style="background:lightgray;padding-left:7px;margin-top: 5px;">
+                                <div style="display: flex;">
+                                    <div><label title="transition time in ms">trans:<br/><input type="text" id="stepTransTime"/></label></div>
+                                    <div><label title="step play time in ms">play:<br/><input type="text" id="stepPlayTime"/></label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:relative;">
+                            <div style="display: flex;background:lightgray;padding-left:7px;margin-top: 5px;">
+                                <label>zoom:<br/><input type="text" id="zoomInfo"/></label>
+                                <label>x:<br/><input type="text" id="scrollXPos"/></label>
+                                <label>y:<br/><input type="text" id="scrollYPos"/></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area" >
+                <div class="svgparent"></div>
+                <div class="note-contents note-clone no-content hide" ><div class="note" contenteditable="true"></div></div>
+            </div>
+            <div id="itemDocs" class="docubox"><div class="content"></div><i class="fas fa-times closeItemDocs"></i></div>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script src="scripts/svg.js?v=5"></script>
+        <script>
+            var svgHandlers = {
+                //empty for now, but can have map of functions that help setup the svg after it is displayed.  
+                //the map keys need to align with the keys used in the svg map being loaded.
+            };
+
+            function getData(data) {
+                if(typeof(data) == "string")
+                    data = JSON.parse(data);
+                return data;
+            }
+
+            jQuery.get("data/svgmap.json?v=5").then(function(map) {                
+                setupSvgSystem(getData(map), svgHandlers);
+
+                jQuery.get("data/animations.json").then(function(scripts){
+                    setupScripts(getData(scripts));
+                });
+            });
+        </script>
+        </body>
+</html>

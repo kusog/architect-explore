@@ -1,0 +1,130 @@
+{
+    "main": {
+        "title": "Acme Systems Overview",
+        "svg": "diagrams/architecture-overview.svg?v=5",
+        "navs": [
+            { "selector": "#kraken", "svg": "krakenAws" },
+            { "selector": "#stock", "svg": "stockAws" },
+            { "selector": "#charon", "url": "http://cnn.com"},
+            { "selector": "#mobilegit", "url": "http://github.com/acme/consumer_mobile/wiki", "css": "txtLink"},
+            { "selector": "#stockgit", "url": "http://github.com/acme/stock#readme", "css": "txtLink"},
+            { "selector": "#krakengit", "url": "http://github.com/acme/kraken#readme", "css": "txtLink"},
+            { "selector": "#sservicegit", "url": "http://github.com/acme/search-service#readme", "css": "txtLink"},
+            { "selector": "#charongit", "url": "http://github.com/acme/charon#readme", "css": "txtLink"},
+            { "selector": "#stealheadgit", "url": "http://github.com/acme/steelhead-daemon#readme", "css": "txtLink"},
+            { "selector": "#fanoutgit", "url": "http://github.com/acme/fanout-service#readme", "css": "txtLink"},
+            { "selector": "#digestgit", "url": "http://github.com/acme/digest-daemon#readme", "css": "txtLink"},
+            { "selector": "#sailthrugit", "url": "http://github.com/acme/sailthru-daemon#readme", "css": "txtLink"},
+            { "selector": "#feedgit", "url": "http://github.com/acme/feed-service#readme", "css": "txtLink"},
+            { "selector": "#sockeyegit", "url": "http://github.com/acme/sockeye-daemon#readme", "css": "txtLink"},
+            { "selector": "#escrongit", "url": "http://github.com/acme/rs-cron/blob/master/lib/acme/elasticsearch_index.rb", "css": "txtLink"},
+            { "selector": "#digestcrongit", "url": "http://github.com/acme/digest-daemon#readme", "css": "txtLink"},
+            { "selector": "#pythiagit", "url": "http://github.com/acme/pythia#readme", "css": "txtLink"},
+            { "selector": "#feedservgit", "url": "http://github.com/acme/feed-service#readme", "css": "txtLink"},
+            { "selector": "#cohogit", "url": "http://github.com/acme/coho#readme", "css": "txtLink"},
+            { "selector": "#videouploadgit", "url": "http://github.com/acme/lambda-video-upload#readme", "css": "txtLink"},
+            { "selector": "#rssmsgit", "url": "http://github.com/acme/lambda-rssms#readme", "css": "txtLink"},
+            { "selector": "#emailinqgit", "url": "http://github.com/acme/lambda-email-inquiry#readme", "css": "txtLink"},
+
+            { "selector": "#sailthruadmin", "url": "http://sailthru.com", "css": "txtLink"},
+            { "selector": "#twillioadmin", "url": "http://twillio.com", "css": "txtLink"},
+            { "selector": "#rabbitadmin", "url": "http://rabbitmq.com", "css": "txtLink"},
+            { "selector": "#sforceadmin", "url": "http://salesforce.com", "css": "txtLink"},
+            { "selector": "#googleadmin", "url": "http://google.com", "css": "txtLink"},
+            { "selector": "#brightcoveadmin", "url": "http://brightcove.com", "css": "txtLink"},
+            { "selector": "#fastlyadmin", "url": "http://fastly.com", "css": "txtLink"},
+            { "selector": "#optimizelyadmin", "url": "http://optimizely.com", "css": "txtLink"}
+        ],
+        "sections": [
+            { "title": "Browser", "id": "Browser", "others": ".browser-lines" },
+            { "title": "Mobile", "id": "Mobile_App", "others": ".mobile-lines" },
+            { "title": "FrontLine", "id": "Front_Line", "others": ".frontline-lines" },
+            { "title": "Lambdas", "id": "Lambdas", "others": ".lambda-lines" },
+            { "title": "Adzerk", "id": "AdzerkArea", "others": ".adzerk-lines" },
+            { "title": "Datastores", "id": "Datastores", "others": ".datastore-lines" },
+            { "title": "Core", "id": "Core", "others": ".core-lines" },
+            { "title": "Rabbit MQ", "id": "RabbitMQ", "others": ".rabbit-lines" },
+            { "title": "Daemons", "id": "Streaming_Daemons", "others": ".daemon-lines" },
+            { "title": "Sailthru", "id": "SailthruArea", "others": ".sailthru-lines" },
+            { "title": "Side Services", "id": "Services", "others": ".sideservices-lines" },
+            { "title": "Crons", "id": "Crons", "others": ".cron-lines" },
+            { "title": "Salesforce", "id": "Salesforce_Area", "others": ".sf-lines" },
+            { "title": "Twillio", "id": "Twillio_Area", "others": ".twillio-lines" },
+            { "title": "Braintree", "id": "BraintreeArea", "others":".braintree-lines" }
+        ],      
+        "lineAssociations": [
+            { "id": "kraken", "others": ".kraken-lines" },
+            { "id": "charon", "others": ".charon-lines" },
+            { "id": "Mobile_App", "others": ".mobile-lines" },
+            { "id": "stock", "others": ".stock-lines"},
+            { "id": "mysql", "others": ".mysql-lines"},
+            { "id": "RabbitMQ", "others": ".rabbit-lines"},
+            { "id": "rssms", "others": ".rssms-lines"},
+            { "id": "feed", "others": ".feed-lines"},
+            { "id": "fanout", "others": ".fanout-lines"},
+            { "id": "elasticcron", "others": ".elasticcron-lines"},
+            { "id": "search_service", "others": ".search-lines"},
+            { "id": "Browser", "others": ".browser-lines"},
+            { "id": "dynomodb", "others": ".dynomodb-lines"}
+        ],
+        "groups": {
+            "line": [
+                ["browser-lines", 1, 5, [70,72]],
+                ["frontline-lines", 1, 11, [50,51,70,72]],
+                ["datastore-lines", 12, 20, [48,49,56,57,64,65,66,67]],
+                ["sideservices-lines", 18, 22, [49,53,59]],
+                ["daemon-lines", 21, 32, [55,59]],
+                ["core-lines", [11,12,13,15,16,35,36,37,38,39,40,41,42,43,44,45,46,47,48,53,54,55,56,57,62,63,64,67,69,71]],
+                ["cron-lines", [14,17,33,54]],
+                ["mobile-lines", [6,7,34,35,36,37,50,51,52]],
+                ["sf-lines", [38,39]],
+                ["lambda-lines", [8,9,58,60,61,62,63,65,66,69]],
+                ["twillio-lines", [40,41,61]],
+                ["adzerk-lines", [10,32,34]],
+                ["sailthru-lines", [30,31,52,68]],
+                ["rabbit-lines", [23,24,25,26,27,29,33,46]],
+                ["braintree-lines", [71]],
+
+                
+                ["kraken-lines", [41,37,62,63,45,44,16,64,56,53,54,38,46,55,69]],
+                ["charon-lines",[42,48,43,45]],
+                ["stock-lines", [11,12,15,40,43,44,47,57,67,71]],
+                ["mysql-lines", [15,16,48]],
+                ["rssms-lines", [60,61,62,66]],
+                ["feed-lines", [21,26]],
+                ["fanout-lines", [27,59]],
+                ["elasticcron-lines", [14,17,54]],
+                ["search-lines",[13,35,42,47]],
+                ["dynomodb-lines", [12,65,66]]
+            ]
+        },
+        "tags": {
+            "info": ["#line48","#line57","#line56","#stock"]
+        }
+    },
+    "krakenAws": {
+        "title": "Kraken AWS Resources",
+        "svg": "diagrams/kraken-aws-resources.svg", 
+        "navs": [
+            {"selector": "#Layer_1_copy", "url": "http://aws.amazon.com"},
+            {"selector": "#Layer_1_copy_2", "svg": "search_service"}
+        ]
+    },
+    "stockAws": {
+        "title": "Stock AWS Resources",
+        "svg": "diagrams/kraken-aws-resources.svg"
+    },
+    "search_service": {
+        "title": "Search Service AWS Resources",
+        "svg": "diagrams/kraken-aws-resources.svg",
+        "navs": [
+            {"selector": "#Layer_1_copy_2", "svg": "tenGuys"}            
+        ]
+    },
+    "tenGuys": {
+        "svg": "diagrams/2450975_high.svg"
+    },
+    "visio1": {
+        "svg": "diagrams/visio1.svg"
+    }
+}
