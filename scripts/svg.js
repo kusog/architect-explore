@@ -445,7 +445,7 @@
                 event.stopPropagation();
             }
             if(id && nodocsFor.indexOf(id) == -1) {
-                $.get("/docs/" + currentSvgId + "." + id + ".html").then(function(html) {
+                $.get("docs/" + currentSvgId + "." + id + ".html").then(function(html) {
                     $("#itemDocs").addClass("active").find(".content").html(html);
                 });
             }
