@@ -203,7 +203,7 @@
                                 x: x, y: y,
                                 width: 10, height: 10
                             }).data("id", linId.substr(1));
-                            txtElem[0].setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "/fontawsome/fa-solid.svg#info-circle");
+                            txtElem[0].setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "fontawsome/fa-solid.svg#info-circle");
                             newSvgDom.find(linId).append(txtElem);
                         });
                     }
